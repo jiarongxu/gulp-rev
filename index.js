@@ -8,6 +8,7 @@ var revHash = require('rev-hash');
 var revPath = require('rev-path');
 var sortKeys = require('sort-keys');
 var modifyFilename = require('modify-filename');
+var tempFilename;
 
 function relPath(base, filePath) {
 	if (filePath.indexOf(base) !== 0) {
@@ -55,11 +56,11 @@ function transformFilename(file) {
 			tempFilename = filename;
 		}
 
-		var fileRevHash = revHash(tempFilename);
+		file.revHash = revHash(tempFilename);
 
 		filename = extIndex === -1 ?
-			revPath(filename, fileRevHash) :
-			revPath(filename.slice(0, extIndex), fileRevHash) + filename.slice(extIndex);
+			revPath(filename, file.revHash) :
+			revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
 
 		return filename + extension;
 	});
