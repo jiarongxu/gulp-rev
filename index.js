@@ -44,14 +44,22 @@ function transformFilename(file) {
 	// save the old path for later
 	file.revOrigPath = file.path;
 	file.revOrigBase = file.base;
-	file.revHash = revHash(file.contents);
 
 	file.path = modifyFilename(file.path, function (filename, extension) {
 		var extIndex = filename.indexOf('.');
 
+		var tempFilename;
+		if(filename.indexOf('@2x') !== -1){
+			tempFilename = filename.split('@2x')[0];
+		}else{
+			tempFilename = filename;
+		}
+
+		var fileRevHash = revHash(tempFilename);
+
 		filename = extIndex === -1 ?
-			revPath(filename, file.revHash) :
-			revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
+			revPath(filename, fileRevHash) :
+			revPath(filename.slice(0, extIndex), fileRevHash) + filename.slice(extIndex);
 
 		return filename + extension;
 	});
