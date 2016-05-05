@@ -8,6 +8,7 @@ var revHash = require('rev-hash');
 var revPath = require('rev-path');
 var sortKeys = require('sort-keys');
 var modifyFilename = require('modify-filename');
+var fs = require('fs');
 var tempFilename;
 
 function relPath(base, filePath) {
@@ -45,27 +46,48 @@ function transformFilename(file) {
 	// save the old path for later
 	file.revOrigPath = file.path;
 	file.revOrigBase = file.base;
-
-	var reservedFilename = path.basename(file.path, '.map').slice(0, 0 - path.extname(file.path).length);
+	var reservedFilenameWithExt = path.basename(file.path, '.map')
+	var reservedFilename = reservedFilenameWithExt.slice(0, 0 - path.extname(file.path).length);
+	var reservedDirname = path.dirname(file.path);
+	var reservedExt = path.extname(file.path);
 	var tempFilename;
 
 	if(reservedFilename.indexOf('@2x') !== -1){
 		tempFilename = reservedFilename.split('@2x')[0];
+
+		var normalPath = reservedDirname + '/' + tempFilename + reservedExt;
+		fs.readFile(normalPath, (err, data) => {
+			if (err) throw err;
+			console.log(data);
+
+			file.revHash = revHash(data);
+
+			file.path = modifyFilename(file.path, function (filename, extension) {
+				var extIndex = filename.indexOf('.');
+
+				filename = extIndex === -1 ?
+					revPath(filename, file.revHash) :
+				revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
+
+				return filename + extension;
+			});
+		});
+
+
+
 	}else{
-		tempFilename = reservedFilename;
+		file.revHash = revHash(file.contents);
+
+		file.path = modifyFilename(file.path, function (filename, extension) {
+			var extIndex = filename.indexOf('.');
+
+			filename = extIndex === -1 ?
+				revPath(filename, file.revHash) :
+			revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
+
+			return filename + extension;
+		});
 	}
-
-	file.revHash = revHash(tempFilename);
-
-	file.path = modifyFilename(file.path, function (filename, extension) {
-		var extIndex = filename.indexOf('.');
-
-		filename = extIndex === -1 ?
-			revPath(filename, file.revHash) :
-		revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
-
-		return filename + extension;
-	});
 }
 
 var plugin = function () {
