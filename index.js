@@ -47,7 +47,6 @@ function transformFilename(file) {
 	file.revOrigBase = file.base;
 
 	var reservedFilename = path.basename(file.path, '.map').slice(0, 0 - path.extname(file.path).length);
-	console.log(reservedFilename);
 	var tempFilename;
 
 	if(reservedFilename.indexOf('@2x') !== -1){
