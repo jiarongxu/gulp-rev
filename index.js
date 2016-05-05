@@ -46,21 +46,24 @@ function transformFilename(file) {
 	file.revOrigPath = file.path;
 	file.revOrigBase = file.base;
 
+	var reservedFilename = path.basename(file.path, '.map').slice(0, 0 - path.extname(file.path).length);
+	console.log(reservedFilename);
+	var tempFilename;
+
+	if(reservedFilename.indexOf('@2x') !== -1){
+		tempFilename = reservedFilename.split('@2x')[0];
+	}else{
+		tempFilename = reservedFilename;
+	}
+
+	file.revHash = revHash(tempFilename);
+
 	file.path = modifyFilename(file.path, function (filename, extension) {
 		var extIndex = filename.indexOf('.');
 
-		var tempFilename;
-		if(filename.indexOf('@2x') !== -1){
-			tempFilename = filename.split('@2x')[0];
-		}else{
-			tempFilename = filename;
-		}
-
-		file.revHash = revHash(tempFilename);
-
 		filename = extIndex === -1 ?
 			revPath(filename, file.revHash) :
-			revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
+		revPath(filename.slice(0, extIndex), file.revHash) + filename.slice(extIndex);
 
 		return filename + extension;
 	});
