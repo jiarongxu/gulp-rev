@@ -58,8 +58,6 @@ function transformFilename(file) {
 		var normalPath = reservedDirname + '/' + tempFilename + reservedExt;
 		fs.readFile(normalPath, (err, data) => {
 			if (err) throw err;
-			console.log(data);
-
 			file.revHash = revHash(data);
 
 			file.path = modifyFilename(file.path, function (filename, extension) {
