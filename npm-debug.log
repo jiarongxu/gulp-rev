@@ -1,0 +1,146 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/roger/.nvm/versions/node/v7.3.0/bin/node',
+1 verbose cli   '/Users/roger/.nvm/versions/node/v7.3.0/bin/npm',
+1 verbose cli   'publish',
+1 verbose cli   '--access=public' ]
+2 info using npm@4.0.5
+3 info using node@v7.3.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/roger/Sites/gulp-rev',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/roger/.npm/gulp-rev/7.0.2/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/roger/.npm correctMkdir not in flight; initializing
+10 info lifecycle gulp-rev@7.0.2~prepublish: gulp-rev@7.0.2
+11 silly lifecycle gulp-rev@7.0.2~prepublish: no script for prepublish, continuing
+12 info lifecycle gulp-rev@7.0.2~prepare: gulp-rev@7.0.2
+13 silly lifecycle gulp-rev@7.0.2~prepare: no script for prepare, continuing
+14 verbose tar pack [ '/Users/roger/.npm/gulp-rev/7.0.2/package.tgz',
+14 verbose tar pack   '/Users/roger/Sites/gulp-rev' ]
+15 verbose tarball /Users/roger/.npm/gulp-rev/7.0.2/package.tgz
+16 verbose folder /Users/roger/Sites/gulp-rev
+17 verbose addLocalTarball adding from inside cache /Users/roger/.npm/gulp-rev/7.0.2/package.tgz
+18 verbose correctMkdir /Users/roger/.npm correctMkdir not in flight; initializing
+19 silly cache afterAdd gulp-rev@7.0.2
+20 verbose afterAdd /Users/roger/.npm/gulp-rev/7.0.2/package/package.json not in flight; writing
+21 verbose correctMkdir /Users/roger/.npm correctMkdir not in flight; initializing
+22 verbose afterAdd /Users/roger/.npm/gulp-rev/7.0.2/package/package.json written
+23 silly publish { name: 'gulp-rev',
+23 silly publish   version: '7.0.2',
+23 silly publish   description: 'Static asset revisioning by appending content hash to filenames: unicorn.css => unicorn-d41d8cd98f.css',
+23 silly publish   license: 'MIT',
+23 silly publish   repository:
+23 silly publish    { type: 'git',
+23 silly publish      url: 'git+https://github.com/sindresorhus/gulp-rev.git' },
+23 silly publish   author:
+23 silly publish    { name: 'Sindre Sorhus',
+23 silly publish      email: 'sindresorhus@gmail.com',
+23 silly publish      url: 'sindresorhus.com' },
+23 silly publish   maintainers:
+23 silly publish    [ { name: 'Justin Hileman',
+23 silly publish        email: 'justin@justinhileman.info',
+23 silly publish        url: 'justinhileman.info' } ],
+23 silly publish   engines: { node: '>=0.10.0' },
+23 silly publish   scripts: { test: 'xo && mocha' },
+23 silly publish   files: [ 'index.js' ],
+23 silly publish   keywords:
+23 silly publish    [ 'gulpplugin',
+23 silly publish      'rev',
+23 silly publish      'revving',
+23 silly publish      'revision',
+23 silly publish      'hash',
+23 silly publish      'optimize',
+23 silly publish      'version',
+23 silly publish      'versioning',
+23 silly publish      'cache',
+23 silly publish      'expire',
+23 silly publish      'static',
+23 silly publish      'asset',
+23 silly publish      'assets' ],
+23 silly publish   dependencies:
+23 silly publish    { 'gulp-util': '^3.0.0',
+23 silly publish      'modify-filename': '^1.1.0',
+23 silly publish      'object-assign': '^4.0.1',
+23 silly publish      'rev-hash': '^1.0.0',
+23 silly publish      'rev-path': 'git+https://github.com/jiarongxu/rev-path.git',
+23 silly publish      'sort-keys': '^1.0.0',
+23 silly publish      through2: '^2.0.0',
+23 silly publish      'vinyl-file': '^1.1.0' },
+23 silly publish   devDependencies: { mocha: '*', xo: '*' },
+23 silly publish   xo: { envs: [ 'node', 'mocha' ] },
+23 silly publish   readme: '# gulp-rev [![Build Status](https://travis-ci.org/sindresorhus/gulp-rev.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-rev)\n\n> Static asset revisioning by appending content hash to filenames\n> `unicorn.css` → `unicorn-d41d8cd98f.css`\n\nMake sure to set the files to [never expire](http://developer.yahoo.com/performance/rules.html#expires) for this to have an effect.\n\n\n## Install\n\n```\n$ npm install --save-dev gulp-rev\n```\n\n\n## Usage\n\n```js\nvar gulp = require(\'gulp\');\nvar rev = require(\'gulp-rev\');\n\ngulp.task(\'default\', function () {\n\treturn gulp.src(\'src/*.css\')\n\t\t.pipe(rev())\n\t\t.pipe(gulp.dest(\'dist\'));\n});\n```\n\n\n## API\n\n### rev()\n\n### rev.manifest([path], [options])\n\n#### path\n\nType: `string`\nDefault: `"rev-manifest.json"`\n\nManifest file path.\n\n#### options\n\n##### base\n\nType: `string`\nDefault: `process.cwd()`\n\nOverride the `base` of the manifest file.\n\n##### cwd\n\nType: `string`\nDefault: `process.cwd()`\n\nOverride the `cwd` (current working directory) of the manifest file.\n\n##### merge\n\nType: `boolean`\nDefault: `false`\n\nMerge existing manifest file.\n\n##### transformer\n\nType: `object`\nDefault: `JSON`\n\nAn object with `parse` and `stringify` methods. This can be used to provide a\ncustom transformer instead of the default `JSON` for the manifest file.\n\n\n### Original path\n\nOriginal file paths are stored at `file.revOrigPath`. This could come in handy for things like rewriting references to the assets.\n\n\n### Asset hash\n\nThe hash of each rev\'d file is stored at `file.revHash`. You can use this for customizing the file renaming, or for building different manifest formats.\n\n\n### Asset manifest\n\n```js\nvar gulp = require(\'gulp\');\nvar rev = require(\'gulp-rev\');\n\ngulp.task(\'default\', function () {\n\t// by default, gulp would pick `assets/css` as the base,\n\t// so we need to set it explicitly:\n\treturn gulp.src([\'assets/css/*.css\', \'assets/js/*.js\'], {base: \'assets\'})\n\t\t.pipe(gulp.dest(\'build/assets\'))  // copy original assets to build dir\n\t\t.pipe(rev())\n\t\t.pipe(gulp.dest(\'build/assets\'))  // write rev\'d assets to build dir\n\t\t.pipe(rev.manifest())\n\t\t.pipe(gulp.dest(\'build/assets\')); // write manifest to build dir\n});\n```\n\nAn asset manifest, mapping the original paths to the revisioned paths, will be written to `build/assets/rev-manifest.json`:\n\n```json\n{\n\t"css/unicorn.css": "css/unicorn-d41d8cd98f.css",\n\t"js/unicorn.js": "js/unicorn-273c2cin3f.js"\n}\n```\n\nBy default, `rev-manifest.json` will be replaced as a whole. To merge with an existing manifest, pass `merge: true` and the output destination (as `base`) to `rev.manifest()`:\n\n```js\nvar gulp = require(\'gulp\');\nvar rev = require(\'gulp-rev\');\n\ngulp.task(\'default\', function () {\n\t// by default, gulp would pick `assets/css` as the base,\n\t// so we need to set it explicitly:\n\treturn gulp.src([\'assets/css/*.css\', \'assets/js/*.js\'], {base: \'assets\'})\n\t\t.pipe(gulp.dest(\'build/assets\'))\n\t\t.pipe(rev())\n\t\t.pipe(gulp.dest(\'build/assets\'))\n\t\t.pipe(rev.manifest({\n\t\t\tbase: \'build/assets\',\n\t\t\tmerge: true // merge with the existing manifest (if one exists)\n\t\t}))\n\t\t.pipe(gulp.dest(\'build/assets\'));\n});\n```\n\nYou can optionally call `rev.manifest(\'manifest.json\')` to give it a different path or filename.\n\n\n## Sourcemaps and `gulp-concat`\n\nBecause of the way `gulp-concat` handles file paths, you may need to set `cwd` and `path` manually on your `gulp-concat` instance to get everything to work correctly:\n\n```js\nvar gulp = require(\'gulp\');\nvar rev = require(\'gulp-rev\');\nvar sourcemaps = require(\'gulp-sourcemaps\');\nvar concat = require(\'gulp-concat\');\n\ngulp.task(\'default\', function () {\n\treturn gulp.src(\'src/*.js\')\n\t\t.pipe(sourcemaps.init())\n\t\t.pipe(concat({path: \'bundle.js\', cwd: \'\'}))\n\t\t.pipe(rev())\n\t\t.pipe(sourcemaps.write(\'.\'))\n\t\t.pipe(gulp.dest(\'dist\'));\n```\n\n\n## Streaming\n\nThis plugin does not support streaming. If you have files from a streaming source, such as browserify, you should use [gulp-buffer](https://github.com/jeromew/gulp-buffer) before `gulp-rev` in your pipeline:\n\n```js\nvar gulp = require(\'gulp\');\nvar browserify = require(\'browserify\');\nvar source = require(\'vinyl-source-stream\');\nvar buffer = require(\'gulp-buffer\');\nvar rev = require(\'gulp-rev\');\n\ngulp.task(\'default\', function () {\n\treturn browserify(\'src/index.js\')\n\t\t.bundle({debug: true})\n\t\t.pipe(source(\'index.min.js\'))\n\t\t.pipe(buffer())\n\t\t.pipe(rev())\n\t\t.pipe(gulp.dest(\'dist\'))\n});\n```\n\n\n## Integration\n\nFor more info on how to integrate **gulp-rev** into your app, have a look at the [integration guide](integration.md).\n\n\n## Works with gulp-rev\n\n- [gulp-rev-replace](https://github.com/jamesknelson/gulp-rev-replace) - Rewrite occurences of filenames which have been renamed\n- [gulp-rev-css-url](https://github.com/galkinrost/gulp-rev-css-url) - Override URLs in CSS files with the revved ones\n- [gulp-rev-outdated](https://github.com/shonny-ua/gulp-rev-outdated) - Old static asset revision files filter\n- [gulp-rev-collector](https://github.com/shonny-ua/gulp-rev-collector) - Static asset revision data collector\n- [rev-del](https://github.com/callumacrae/rev-del) - Delete old unused assets\n- [gulp-rev-delete-original](https://github.com/nib-health-funds/gulp-rev-delete-original) - Delete original files after rev\n- [gulp-rev-loader](https://github.com/adjavaherian/gulp-rev-loader) - Use rev-manifest with webpack\n\n## License\n\nMIT © [Sindre Sorhus](http://sindresorhus.com)\n',
+23 silly publish   readmeFilename: 'readme.md',
+23 silly publish   gitHead: '9cce1cae4775b079bd9aadbc91669307ac88b85f',
+23 silly publish   bugs: { url: 'https://github.com/sindresorhus/gulp-rev/issues' },
+23 silly publish   homepage: 'https://github.com/sindresorhus/gulp-rev#readme',
+23 silly publish   _id: 'gulp-rev@7.0.2',
+23 silly publish   _shasum: '9397ddf661bc2c242a88b21ae5a4cb6b3b54eaeb',
+23 silly publish   _from: '.' }
+24 info lifecycle gulp-rev@7.0.2~prepublishOnly: gulp-rev@7.0.2
+25 silly lifecycle gulp-rev@7.0.2~prepublishOnly: no script for prepublishOnly, continuing
+26 verbose getPublishConfig undefined
+27 silly mapToRegistry name gulp-rev
+28 silly mapToRegistry using default registry
+29 silly mapToRegistry registry https://registry.npmjs.org/
+30 silly mapToRegistry data Result {
+30 silly mapToRegistry   raw: 'gulp-rev',
+30 silly mapToRegistry   scope: null,
+30 silly mapToRegistry   escapedName: 'gulp-rev',
+30 silly mapToRegistry   name: 'gulp-rev',
+30 silly mapToRegistry   rawSpec: '',
+30 silly mapToRegistry   spec: 'latest',
+30 silly mapToRegistry   type: 'tag' }
+31 silly mapToRegistry uri https://registry.npmjs.org/gulp-rev
+32 verbose publish registryBase https://registry.npmjs.org/
+33 silly publish uploading /Users/roger/.npm/gulp-rev/7.0.2/package.tgz
+34 verbose request uri https://registry.npmjs.org/gulp-rev
+35 verbose request sending authorization for write operation
+36 info attempt registry request try #1 at 1:07:37 PM
+37 verbose request using bearer token for auth
+38 verbose request id 795e52db457d8a07
+39 http request PUT https://registry.npmjs.org/gulp-rev
+40 http 403 https://registry.npmjs.org/gulp-rev
+41 verbose headers { 'content-type': 'application/json',
+41 verbose headers   'cache-control': 'max-age=300',
+41 verbose headers   'content-length': '102',
+41 verbose headers   'accept-ranges': 'bytes',
+41 verbose headers   date: 'Mon, 27 Mar 2017 17:07:37 GMT',
+41 verbose headers   via: '1.1 varnish',
+41 verbose headers   connection: 'keep-alive',
+41 verbose headers   'x-served-by': 'cache-jfk8136-JFK',
+41 verbose headers   'x-cache': 'MISS',
+41 verbose headers   'x-cache-hits': '0',
+41 verbose headers   'x-timer': 'S1490634457.254608,VS0,VE289',
+41 verbose headers   vary: 'Accept-Encoding' }
+42 verbose request invalidating /Users/roger/.npm/registry.npmjs.org/gulp-rev on PUT
+43 error publish Failed PUT 403
+44 verbose stack Error: you do not have permission to publish "gulp-rev". Are you logged in as the correct user? : gulp-rev
+44 verbose stack     at makeError (/Users/roger/.nvm/versions/node/v7.3.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+44 verbose stack     at CachingRegistryClient.<anonymous> (/Users/roger/.nvm/versions/node/v7.3.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+44 verbose stack     at Request._callback (/Users/roger/.nvm/versions/node/v7.3.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+44 verbose stack     at Request.self.callback (/Users/roger/.nvm/versions/node/v7.3.0/lib/node_modules/npm/node_modules/request/request.js:186:22)
+44 verbose stack     at emitTwo (events.js:106:13)
+44 verbose stack     at Request.emit (events.js:191:7)
+44 verbose stack     at Request.<anonymous> (/Users/roger/.nvm/versions/node/v7.3.0/lib/node_modules/npm/node_modules/request/request.js:1081:10)
+44 verbose stack     at emitOne (events.js:96:13)
+44 verbose stack     at Request.emit (events.js:188:7)
+44 verbose stack     at IncomingMessage.<anonymous> (/Users/roger/.nvm/versions/node/v7.3.0/lib/node_modules/npm/node_modules/request/request.js:1001:12)
+45 verbose statusCode 403
+46 verbose pkgid gulp-rev
+47 verbose cwd /Users/roger/Sites/gulp-rev
+48 error Darwin 15.6.0
+49 error argv "/Users/roger/.nvm/versions/node/v7.3.0/bin/node" "/Users/roger/.nvm/versions/node/v7.3.0/bin/npm" "publish" "--access=public"
+50 error node v7.3.0
+51 error npm  v4.0.5
+52 error code E403
+53 error you do not have permission to publish "gulp-rev". Are you logged in as the correct user? : gulp-rev
+54 error If you need help, you may report this error at:
+54 error     <https://github.com/npm/npm/issues>
+55 verbose exit [ 1, true ]
